@@ -8,7 +8,7 @@ internal class Program
 {
     private static void Main(string[] args)
     {
-        var parser = new IpParserConfiguration(args);
+        var parser = new IpParserConfiguration(args, "config.json");
         var options = parser.Parse();
 
         // --file-log=

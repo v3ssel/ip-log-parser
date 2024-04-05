@@ -1,0 +1,8 @@
+{
+    "file-log": "input.log",
+    "file-output": "output.log",
+    "address-start": "192.168.0.0",
+    "address-mask": 16,
+    "time-start": "01.04.2024",
+    "time-end": "30.04.2024"
+}

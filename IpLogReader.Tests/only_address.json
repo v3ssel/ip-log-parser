@@ -1,0 +1,4 @@
+{
+    "address-start": "192.0.0.0",
+    "address-mask": 24
+}

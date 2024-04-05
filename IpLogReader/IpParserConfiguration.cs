@@ -8,17 +8,19 @@ namespace IpLogReader;
 public class IpParserConfiguration : IpParser
 {
     private readonly string[] InputArgs;
+    public string ConfigPath { get; set; }
 
-    public IpParserConfiguration(string[] args)
+    public IpParserConfiguration(string[] args, string config_path = "config.json")
     {
         InputArgs = args;
+        ConfigPath = config_path;
     }
 
     public IpParserOptions Parse()
     {
         var configuration = new ConfigurationBuilder()
-                .AddJsonFile("config.json", optional: false)
                 .AddEnvironmentVariables()
+                .AddJsonFile(ConfigPath, optional: true)
                 .AddCommandLine(InputArgs)
                 .Build();
 
@@ -47,11 +49,6 @@ public class IpParserConfiguration : IpParser
 
             var mask = configuration["address-mask"];
             options.AddressMask = mask is null ? null : int.Parse(mask);
-
-            // if (options.AddressMask is not null && (options.AddressMask < 1 || options.AddressMask > 32))
-            // {
-            //     throw new ArgumentException("Address mask should be between 1 and 32.");
-            // }
         }
 
         Validator.ValidateObject(options, new ValidationContext(options), true);
