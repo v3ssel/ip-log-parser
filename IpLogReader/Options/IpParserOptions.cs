@@ -1,12 +1,9 @@
 using System.ComponentModel.DataAnnotations;
-using System.Diagnostics.CodeAnalysis;
 using System.Net;
-using System.Text.Json.Serialization;
-using Microsoft.Extensions.Configuration;
 
-namespace IpLogReader;
+namespace IpLogParser.Options;
 
-public class IpParserOptions
+public class IpLogParserOptions
 {
     [Required(AllowEmptyStrings = false, ErrorMessage = "File log are required parameter.")]
     public string? FileLog { get; set; }

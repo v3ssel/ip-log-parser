@@ -3,20 +3,20 @@ using System.Globalization;
 using System.Net;
 using Microsoft.Extensions.Configuration;
 
-namespace IpLogReader;
+namespace IpLogParser.Options;
 
-public class IpParserConfiguration : IpParser
+public class ArgsParserConfiguration : IArgsParser
 {
     private readonly string[] InputArgs;
     public string ConfigPath { get; set; }
 
-    public IpParserConfiguration(string[] args, string config_path = "config.json")
+    public ArgsParserConfiguration(string[] args, string config_path = "config.json")
     {
         InputArgs = args;
         ConfigPath = config_path;
     }
 
-    public IpParserOptions Parse()
+    public IpLogParserOptions Parse()
     {
         var configuration = new ConfigurationBuilder()
                 .AddEnvironmentVariables()
@@ -24,7 +24,7 @@ public class IpParserConfiguration : IpParser
                 .AddCommandLine(InputArgs)
                 .Build();
 
-        var options = new IpParserOptions()
+        var options = new IpLogParserOptions()
         {
             FileLog = configuration["file-log"],
             FileOutput = configuration["file-output"],
