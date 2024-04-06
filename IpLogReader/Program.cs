@@ -5,14 +5,14 @@ using IpLogParser.Reader;
 using IpLogParser.Options;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Configuration.Json;
+using IpLogParser.Writer;
 
 namespace IpLogParser;
 
 internal class Program
 {
-    private static void Main(string[] args)
+    private static async Task Main(string[] args)
     {
-        var parser = new ArgsParserConfiguration(args, "config.json");
         // var options = parser.Parse();
         
         // var mask = 26;
@@ -26,18 +26,28 @@ internal class Program
         // var m = IpLogReader.AddressMatch(bytes, start_ip.GetAddressBytes(), end_ip.GetAddressBytes());
         // Console.WriteLine($"{m}");
 
-        var log_reader = new IpLogReader(parser);
-        var result = log_reader.Read();
 
-        foreach (var r in result.AddressToRequestCount)
+        // foreach (var r in result.AddressToRequestCount)
+        // {
+        //     Console.WriteLine($"{r.Key} {r.Value}");
+        // }
+
+        try
         {
-            Console.WriteLine($"{r.Key} {r.Value}");
+            var parser = new ArgsParserConfiguration(args, "config.json");
+            var options = parser.Parse();
+
+            var log_reader = new IpLogReader();
+            var result = log_reader.Read(options);
+
+            var writer = new FileIpLogWriter();
+            await writer.WriteAsync(options.FileOutput!, result);
+
         }
-
-        // 180.103.163.25
-
-
-
+        catch (Exception e)
+        {
+            Console.WriteLine($"Critical error occured: {e.Message}.\nPlease review your input arguments or log file.");
+        }
 
         // --file-log=
         // --file-output=

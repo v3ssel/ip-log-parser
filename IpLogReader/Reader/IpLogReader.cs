@@ -7,17 +7,8 @@ namespace IpLogParser.Reader;
 
 public class IpLogReader
 {
-    private readonly IArgsParser OptionsParser;
-
-    public IpLogReader(IArgsParser options_parser)
+    public IpLogReaderResult Read(IpLogParserOptions options)
     {
-        OptionsParser = options_parser;
-    }
-
-    public IpLogReaderResult Read()
-    {
-        var options = OptionsParser.Parse();
- 
         var (lower_address_bytes, upper_address_bytes) =  GetAddressBounds(options);
         var err_list = new List<Exception>();
         var result_dict = new Dictionary<IPAddress, long>();
