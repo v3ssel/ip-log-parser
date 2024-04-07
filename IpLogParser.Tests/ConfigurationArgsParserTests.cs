@@ -8,7 +8,7 @@ namespace IpLogParser.Tests;
 public class ConfigurationArgsParserTests
 {
     [Fact]
-    public void ParseOptionsWithCommandLineArgs()
+    public void ParseOptions_WithCommandLineArgs()
     {
         var args = new string[]
         {
@@ -32,7 +32,7 @@ public class ConfigurationArgsParserTests
     }
 
     [Fact]
-    public void ParseOptionsWithJsonConfig()
+    public void ParseOptions_WithJsonConfig()
     {
         var args = Array.Empty<string>();
         var parser = new ConfigurationArgsParser(args, "test_configs/full_config.json");
@@ -47,7 +47,7 @@ public class ConfigurationArgsParserTests
     }
 
     [Fact]
-    public void ParseOptionsWithEnvVars()
+    public void ParseOptions_WithEnvVars()
     {
         System.Environment.SetEnvironmentVariable("file-log", "input.log");
         System.Environment.SetEnvironmentVariable("file-output", "output.log");
@@ -76,7 +76,7 @@ public class ConfigurationArgsParserTests
     }
 
     [Fact]
-    public void ParseOptionsWithAllProviders()
+    public void ParseOptions_WithAllProviders()
     {
         System.Environment.SetEnvironmentVariable("time-start", "01.01.2024");
         System.Environment.SetEnvironmentVariable("time-end", "01.05.2024");
@@ -102,7 +102,7 @@ public class ConfigurationArgsParserTests
     }
 
     [Fact]
-    public void ParseOptionsWithOnlyRequiredArgs()
+    public void ParseOptions_WithOnlyRequiredArgs()
     {
         var args = new string[]
         {
@@ -122,7 +122,7 @@ public class ConfigurationArgsParserTests
     }
 
     [Fact]
-    public void ParseOptionsWithInvalidArgs()
+    public void ParseOptions_WithInvalidArgs()
     {
         var args = new string[6]
         {
