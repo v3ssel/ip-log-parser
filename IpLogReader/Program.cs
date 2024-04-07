@@ -14,34 +14,14 @@ internal class Program
 {
     private static async Task Main(string[] args)
     {
-        // var options = parser.Parse();
-        
-        // var mask = 26;
-        // var real_ip = IPAddress.Parse("180.103.163.25");
-        // var bytes = real_ip.GetAddressBytes();
-
-        // var start_ip = IPAddress.Parse("50.100.150.0");
-        // var end_ip = IpUtils.GetLastUsableAddress(start_ip, IpUtils.MaskToAddress(mask));
-
-        // Console.WriteLine($"{string.Join('.', bytes)} | {start_ip} | {end_ip}");
-        // var m = IpLogReader.AddressMatch(bytes, start_ip.GetAddressBytes(), end_ip.GetAddressBytes());
-        // Console.WriteLine($"{m}");
-
-
-        // foreach (var r in result.AddressToRequestCount)
-        // {
-        //     Console.WriteLine($"{r.Key} {r.Value}");
-        // }
-
         try
         {
             var parser = new ConfigurationArgsParser(args, "config.json");
-            var options = parser.Parse();
-
             var log_reader = new IpLogReader();
-            var result = IpLogReader.Read(options);
-
             var writer = new FileIpLogWriter();
+
+            var options = parser.Parse();
+            var result = log_reader.Read(options);
             await writer.WriteAsync(options.FileOutput!, result);
 
             if (result.Errors?.Count() > 0)
@@ -52,10 +32,12 @@ internal class Program
                     Console.WriteLine(err.Message);
                 }
             }
+
+            Console.WriteLine($"Result successfully exported to '{options.FileOutput}' ({result.AddressToRequestCount!.Count} lines total).");
         }
         catch (Exception e)
         {
-            Console.WriteLine($"Critical error occured: {e.Message}.\nApplication cannot continue work.\nPlease review your input arguments or log file.");
+            Console.WriteLine($"Critical error occured: {e.Message}\nApplication cannot continue to work.\nPlease review your input arguments or log file.");
         }
 
         // --file-log=
