@@ -1,6 +1,8 @@
 {
     "file-log": "input.log",
     "file-output": "output.log",
+    "address-start": "10.0.0.0",
+    "address-mask": 2,
     "time-start": "01.10.2023",
-    "time-end": "01.12.2023"
+    "time-end": "01.01.2024"
 }

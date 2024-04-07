@@ -12,10 +12,9 @@ public class FileIpLogWriter : IIpLogWriter
 
     public async Task WriteAsync(string path, IpLogReaderResult data)
     {
+        var file = File.Open(path, FileMode.Create);
         if (data.AddressToRequestCount is null)
             return;
-
-        var file = File.OpenWrite(path);
 
         using (var writer = new StreamWriter(file))
         {

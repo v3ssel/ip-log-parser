@@ -6,6 +6,7 @@ using IpLogParser.Options;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Configuration.Json;
 using IpLogParser.Writer;
+using System.Globalization;
 
 namespace IpLogParser;
 
@@ -38,15 +39,23 @@ internal class Program
             var options = parser.Parse();
 
             var log_reader = new IpLogReader();
-            var result = log_reader.Read(options);
+            var result = IpLogReader.Read(options);
 
             var writer = new FileIpLogWriter();
             await writer.WriteAsync(options.FileOutput!, result);
 
+            if (result.Errors?.Count() > 0)
+            {
+                Console.WriteLine($"While reading '{options.FileLog}' file there was {result.Errors.Count()} non critical errors occured.");
+                foreach (var err in result.Errors)
+                {
+                    Console.WriteLine(err.Message);
+                }
+            }
         }
         catch (Exception e)
         {
-            Console.WriteLine($"Critical error occured: {e.Message}.\nPlease review your input arguments or log file.");
+            Console.WriteLine($"Critical error occured: {e.Message}.\nApplication cannot continue work.\nPlease review your input arguments or log file.");
         }
 
         // --file-log=

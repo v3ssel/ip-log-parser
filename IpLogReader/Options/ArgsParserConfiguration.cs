@@ -8,6 +8,8 @@ namespace IpLogParser.Options;
 public class ArgsParserConfiguration : IArgsParser
 {
     private readonly string[] InputArgs;
+    private const string DatesFormat = "dd.MM.yyyy";
+    
     public string ConfigPath { get; set; }
 
     public ArgsParserConfiguration(string[] args, string config_path = "config.json")
@@ -33,13 +35,13 @@ public class ArgsParserConfiguration : IArgsParser
         var time_start = configuration["time-start"];
         if (time_start is not null)
         {
-            options.TimeStart = DateTime.ParseExact(time_start, "dd.MM.yyyy", CultureInfo.InvariantCulture);
+            options.TimeStart = DateTime.ParseExact(time_start, DatesFormat, CultureInfo.InvariantCulture);
         }
 
         var time_end = configuration["time-end"];
         if (time_end is not null)
         {
-            options.TimeEnd = DateTime.ParseExact(time_end, "dd.MM.yyyy", CultureInfo.InvariantCulture);
+            options.TimeEnd = DateTime.ParseExact(time_end, DatesFormat, CultureInfo.InvariantCulture);
         }
 
         var address_start = configuration["address-start"];

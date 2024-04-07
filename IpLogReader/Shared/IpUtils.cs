@@ -19,4 +19,44 @@ public static class IpUtils
         
         return new IPAddress(BitConverter.GetBytes(last_usable).Reverse().ToArray());
     }
+
+    public static (IPAddress?, IPAddress?) GetAddressBounds(IPAddress? address_start, int? mask)
+    {
+        IPAddress? lower_address_bytes = null;
+        IPAddress? upper_address_bytes = null;
+
+        if (address_start is not null)
+        {
+            lower_address_bytes = address_start;
+
+            if (mask is not null)
+            {
+                var mask_address = MaskToAddress((int)mask);
+                upper_address_bytes = GetLastUsableAddress(address_start, mask_address);
+            }
+        }
+
+        return (lower_address_bytes, upper_address_bytes);
+    }
+
+    public static bool AddressMatch(IPAddress address, IPAddress? lower_bound, IPAddress? upper_bound)
+    {
+        if (lower_bound is null && upper_bound is null)
+            return true;
+
+        var address_bytes = address.GetAddressBytes();
+        var lower_bound_bytes = lower_bound?.GetAddressBytes();
+        var upper_bound_bytes = upper_bound?.GetAddressBytes();
+
+        for (var i = 0; i < address_bytes.Length; i++)
+        {
+            if ((lower_bound_bytes is not null && address_bytes[i] < lower_bound_bytes[i]) ||
+                (upper_bound_bytes is not null && address_bytes[i] > upper_bound_bytes[i]))
+            {
+                return false;
+            }
+        }
+      
+        return true;
+    }
 }
