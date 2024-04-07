@@ -35,7 +35,7 @@ internal class Program
 
         try
         {
-            var parser = new ArgsParserConfiguration(args, "config.json");
+            var parser = new ConfigurationArgsParser(args, "config.json");
             var options = parser.Parse();
 
             var log_reader = new IpLogReader();

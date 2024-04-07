@@ -1,10 +1,11 @@
 using Xunit;
-using IpLogReader;
+using IpLogParser.Options;
 using System.Net;
 using System.ComponentModel.DataAnnotations;
-namespace IpLogReader.Tests;
 
-public class IpParserConfigurationTests
+namespace IpLogParser.Tests;
+
+public class ConfigurationArgsParserTests
 {
     [Fact]
     public void ParseOptionsWithCommandLineArgs()
@@ -19,7 +20,7 @@ public class IpParserConfigurationTests
             "--time-end=01.04.2024"
         };
 
-        var parser = new IpParserConfiguration(args);
+        var parser = new ConfigurationArgsParser(args);
         var options = parser.Parse();
 
         Assert.Equal("input.log", options.FileLog);
@@ -33,9 +34,8 @@ public class IpParserConfigurationTests
     [Fact]
     public void ParseOptionsWithJsonConfig()
     {
-        var args = new string[]{};
-
-        var parser = new IpParserConfiguration(args, "full_config.json");
+        var args = Array.Empty<string>();
+        var parser = new ConfigurationArgsParser(args, "full_config.json");
         var options = parser.Parse();
 
         Assert.Equal("input.log", options.FileLog);
@@ -56,9 +56,8 @@ public class IpParserConfigurationTests
         System.Environment.SetEnvironmentVariable("time-start", "15.01.2024");
         System.Environment.SetEnvironmentVariable("time-end", "29.02.2024");
         
-        var args = new string[]{};
-
-        var parser = new IpParserConfiguration(args);
+        var args = Array.Empty<string>();
+        var parser = new ConfigurationArgsParser(args);
         var options = parser.Parse();
 
         Assert.Equal("input.log", options.FileLog);
@@ -88,7 +87,7 @@ public class IpParserConfigurationTests
             "--file-output=output.log"
         };
 
-        var parser = new IpParserConfiguration(args, "only_address.json");
+        var parser = new ConfigurationArgsParser(args, "only_address.json");
         var options = parser.Parse();
 
         Assert.Equal("input.log", options.FileLog);
@@ -111,7 +110,7 @@ public class IpParserConfigurationTests
             "--file-output=output.log",
         };
 
-        var parser = new IpParserConfiguration(args);
+        var parser = new ConfigurationArgsParser(args);
         var options = parser.Parse();
 
         Assert.Equal("input.log", options.FileLog);
@@ -135,7 +134,7 @@ public class IpParserConfigurationTests
             ""
         };
 
-        var parser = new IpParserConfiguration(args);
+        var parser = new ConfigurationArgsParser(args);
 
         Assert.Throws<ValidationException>(parser.Parse);
         args[0] = "--file-log=input.log";

@@ -6,13 +6,16 @@ public static class IpUtils
 {
     public static IPAddress MaskToAddress(int mask)
     {
+        if (mask < 1 || mask > 32)
+            throw new ArgumentException("Address mask must be between 1 and 32");
+
         return new IPAddress(BitConverter.GetBytes(uint.MaxValue << (32 - mask)).Reverse().ToArray());
     }
 
-    public static IPAddress GetLastUsableAddress(IPAddress address, IPAddress mask)
+    public static IPAddress GetLastUsableAddress(IPAddress address, int mask)
     {
         var address_long = BitConverter.ToUInt32(address.GetAddressBytes().Reverse().ToArray());
-        var mask_long = BitConverter.ToUInt32(mask.GetAddressBytes().Reverse().ToArray());
+        var mask_long = BitConverter.ToUInt32(MaskToAddress(mask).GetAddressBytes().Reverse().ToArray());
 
         uint network = address_long & mask_long;
         uint last_usable = network | ~mask_long;
@@ -31,8 +34,7 @@ public static class IpUtils
 
             if (mask is not null)
             {
-                var mask_address = MaskToAddress((int)mask);
-                upper_address_bytes = GetLastUsableAddress(address_start, mask_address);
+                upper_address_bytes = GetLastUsableAddress(address_start, (int)mask);
             }
         }
 

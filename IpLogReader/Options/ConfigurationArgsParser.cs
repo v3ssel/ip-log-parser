@@ -5,14 +5,14 @@ using Microsoft.Extensions.Configuration;
 
 namespace IpLogParser.Options;
 
-public class ArgsParserConfiguration : IArgsParser
+public class ConfigurationArgsParser : IArgsParser
 {
     private readonly string[] InputArgs;
     private const string DatesFormat = "dd.MM.yyyy";
     
     public string ConfigPath { get; set; }
 
-    public ArgsParserConfiguration(string[] args, string config_path = "config.json")
+    public ConfigurationArgsParser(string[] args, string config_path = "config.json")
     {
         InputArgs = args;
         ConfigPath = config_path;
