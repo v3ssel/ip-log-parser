@@ -25,20 +25,18 @@ public static class IpUtils
 
     public static (IPAddress?, IPAddress?) GetAddressBounds(IPAddress? address_start, int? mask)
     {
-        IPAddress? lower_address_bytes = null;
-        IPAddress? upper_address_bytes = null;
+        if (address_start is null)
+            return (null, null);
 
-        if (address_start is not null)
+        var lower_address_bytes = address_start;
+
+        if (mask is not null)
         {
-            lower_address_bytes = address_start;
-
-            if (mask is not null)
-            {
-                upper_address_bytes = GetLastUsableAddress(address_start, (int)mask);
-            }
+            var upper_address_bytes = GetLastUsableAddress(address_start, (int)mask);
+            return (lower_address_bytes, upper_address_bytes);
         }
 
-        return (lower_address_bytes, upper_address_bytes);
+        return (lower_address_bytes, null);
     }
 
     public static bool AddressMatch(IPAddress address, IPAddress? lower_bound, IPAddress? upper_bound)
