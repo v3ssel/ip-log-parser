@@ -27,7 +27,8 @@ public class IpLogReaderTests
             {IPAddress.Parse("44.44.167.154"), 1},
         };
 
-        var actual = IpLogReader.Read(options);
+        var reader = new IpLogReader();
+        var actual = reader.Read(options);
 
         Assert.Empty(actual.Errors!);
         Assert.NotEmpty(actual.AddressToRequestCount!);
@@ -48,7 +49,8 @@ public class IpLogReaderTests
             TimeEnd = new DateTime(2024, 1, 1)
         };;
 
-        var actual = IpLogReader.Read(options);
+        var reader = new IpLogReader();
+        var actual = reader.Read(options);
 
         Assert.Empty(actual.Errors!);
         Assert.Empty(actual.AddressToRequestCount!);
@@ -74,7 +76,8 @@ public class IpLogReaderTests
             {IPAddress.Parse("198.51.100.42"), 2},
         };
 
-        var actual = IpLogReader.Read(options);
+        var reader = new IpLogReader();
+        var actual = reader.Read(options);
 
         Assert.Empty(actual.Errors!);
         Assert.NotEmpty(actual.AddressToRequestCount!);
@@ -91,7 +94,8 @@ public class IpLogReaderTests
             FileOutput = "test_input/output2.log",
         };;
 
-        var actual = IpLogReader.Read(options);
+        var reader = new IpLogReader();
+        var actual = reader.Read(options);
 
         Assert.Empty(actual.Errors!);
         Assert.NotEmpty(actual.AddressToRequestCount!);
