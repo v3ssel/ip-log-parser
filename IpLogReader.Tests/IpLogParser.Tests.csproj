@@ -19,10 +19,10 @@
     <PackageReference Include="xunit.runner.visualstudio" Version="2.5.3" />
     <ProjectReference Include="../IpLogReader/IpLogParser.csproj" />
 
-    <Content Include="full_config.json">
+    <Content Include="test_configs/**">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="only_address.json">
+    <Content Include="test_input/**">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

@@ -35,7 +35,7 @@ public class ConfigurationArgsParserTests
     public void ParseOptionsWithJsonConfig()
     {
         var args = Array.Empty<string>();
-        var parser = new ConfigurationArgsParser(args, "full_config.json");
+        var parser = new ConfigurationArgsParser(args, "test_configs/full_config.json");
         var options = parser.Parse();
 
         Assert.Equal("input.log", options.FileLog);
@@ -87,7 +87,7 @@ public class ConfigurationArgsParserTests
             "--file-output=output.log"
         };
 
-        var parser = new ConfigurationArgsParser(args, "only_address.json");
+        var parser = new ConfigurationArgsParser(args, "test_configs/only_address.json");
         var options = parser.Parse();
 
         Assert.Equal("input.log", options.FileLog);
