@@ -18,7 +18,7 @@ internal class Program
 
             var options = parser.Parse();
             var result = log_reader.Read(options);
-            await writer.WriteAsync(options.FileOutput!, result);
+            await writer.WriteAsync(options.FileOutput, result);
 
             if (result.Errors?.Count() > 0)
             {

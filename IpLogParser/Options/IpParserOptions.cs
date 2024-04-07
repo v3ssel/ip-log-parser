@@ -6,10 +6,10 @@ namespace IpLogParser.Options;
 public class IpLogParserOptions
 {
     [Required(AllowEmptyStrings = false, ErrorMessage = "File log are required parameter.")]
-    public string? FileLog { get; set; }
+    public string FileLog { get; set; } = string.Empty;
     
     [Required(AllowEmptyStrings = false, ErrorMessage = "Output file path are required parameter.")]
-    public string? FileOutput { get; set; }
+    public string FileOutput { get; set; } = string.Empty;
     
     public IPAddress? AddressStart { get; set; }
     

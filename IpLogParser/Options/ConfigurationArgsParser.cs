@@ -28,8 +28,8 @@ public class ConfigurationArgsParser : IArgsParser
 
         var options = new IpLogParserOptions()
         {
-            FileLog = configuration["file-log"],
-            FileOutput = configuration["file-output"],
+            FileLog = configuration["file-log"] ?? string.Empty,
+            FileOutput = configuration["file-output"] ?? string.Empty,
         };
 
         var time_start = configuration["time-start"];

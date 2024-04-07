@@ -13,7 +13,7 @@ public class IpLogReader
         var err_list = new List<Exception>();
         var result_dict = new Dictionary<IPAddress, long>();
         
-        foreach (var line in File.ReadLines(options.FileLog!))
+        foreach (var line in File.ReadLines(options.FileLog))
         {
             try
             {
