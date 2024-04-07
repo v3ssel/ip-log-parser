@@ -1,12 +1,8 @@
 ﻿
-using System.Net;
-using System.Net.Sockets;
 using IpLogParser.Reader;
 using IpLogParser.Options;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Configuration.Json;
 using IpLogParser.Writer;
-using System.Globalization;
+using System.ComponentModel.DataAnnotations;
 
 namespace IpLogParser;
 
@@ -35,16 +31,17 @@ internal class Program
 
             Console.WriteLine($"Result successfully exported to '{options.FileOutput}' ({result.AddressToRequestCount!.Count} lines total).");
         }
+        catch (ValidationException e)
+        {
+            Console.WriteLine($"Input error: {e.Message}");
+            Console.Write("Usage: IpLogParser.exe --file-log=<path> [REQUIRED] --file-output=<path> [REQUIRED]");
+            Console.Write(" --address-start=<IP-Address> --address-mask=<CIDR mask>");
+            Console.WriteLine(" --time-start=<dd.MM.yyyy> --time-end=<dd.MM.yyyy>");
+            Console.WriteLine("Note: These parameters can also be set through JSON configuration or ENV variables.");
+        }
         catch (Exception e)
         {
             Console.WriteLine($"Critical error occured: {e.Message}\nApplication cannot continue to work.\nPlease review your input arguments or log file.");
         }
-
-        // --file-log=
-        // --file-output=
-        // --address-start=
-        // --address-mask=
-        // --time-start=
-        // --time-end=
     }
 }
