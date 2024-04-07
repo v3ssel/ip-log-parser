@@ -28,6 +28,8 @@
 --time-end=dd.MM.yyyy
 ```
 Либо через JSON конфигурацию:
+
+**config.json** рядом с исполняемым файлом.
 ``` json
 {
     "file-log": "input.log",
